@@ -174,7 +174,7 @@ func ExtractFonts(rs io.ReadSeeker, outDir, fileName string, selectedPages []str
 		return err
 	}
 
-	fileName = strings.TrimSuffix(filepath.Base(fileName), ".pdf")
+	fileName = strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
 
 	objNrs, skipped := types.IntSet{}, types.IntSet{}
 
@@ -271,7 +271,7 @@ func ExtractPages(rs io.ReadSeeker, outDir, fileName string, selectedPages []str
 		return nil
 	}
 
-	fileName = strings.TrimSuffix(filepath.Base(fileName), ".pdf")
+	fileName = strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
 
 	for _, i := range sortedPages(pages) {
 		r, err := ExtractPage(ctx, i)
@@ -322,7 +322,7 @@ func ExtractContent(rs io.ReadSeeker, outDir, fileName string, selectedPages []s
 		return err
 	}
 
-	fileName = strings.TrimSuffix(filepath.Base(fileName), ".pdf")
+	fileName = strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
 
 	for p, v := range pages {
 		if !v {
@@ -393,7 +393,7 @@ func ExtractMetadata(rs io.ReadSeeker, outDir, fileName string, conf *model.Conf
 	}
 
 	if len(mm) > 0 {
-		fileName = strings.TrimSuffix(filepath.Base(fileName), ".pdf")
+		fileName = strings.TrimSuffix(filepath.Base(fileName), filepath.Ext(fileName))
 		for _, m := range mm {
 			outFile := filepath.Join(outDir, fmt.Sprintf("%s_Metadata_%s_%d_%d.txt", fileName, m.ParentType, m.ParentObjNr, m.ObjNr))
 			logWritingTo(outFile)
